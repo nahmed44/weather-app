@@ -1,9 +1,9 @@
 <template>
   <div class="app">
-    <!-- <Navbar /> -->
+    <Navbar />
     
     <router-view 
-    :cities="cities"
+    :cities="userCities"
     :edit="edit"
     @add-city="addCity"
     />
@@ -20,31 +20,40 @@ export default {
   },
   data(){
     return{
-      cities: [],
+      userCities: [],
       edit: false,
     }
   },
   created(){
     try {
-      const userCities = JSON.parse(localStorage.getItem('cities'));
-      if(userCities){
-        this.cities = userCities;
+      // Upon first load, getting the cities from localStorage
+      const storedCities = JSON.parse(localStorage.getItem('cities'));
+      if(storedCities){
+        this.userCities = storedCities;
       }
      } catch (error) {
-       console.log('in error');
+      console.log('Created APP.vue: in error');
       console.log(error);  
     }
   },
   methods: {
-    async addCity(city){
+    async addCity(cityToAdd){
       try {
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.VUE_APP_API_KEY}`)
+        // Checking if city is already in the userCities array
+        const cityExists = this.userCities.find(city => city.name.toLowerCase() === cityToAdd.toLowerCase());
+        if(typeof(cityExists) !== 'undefined'){
+          alert(`${cityToAdd} is already in your list.`);
+          return;
+        }
+        // Getting the weather data
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityToAdd}&appid=${process.env.VUE_APP_API_KEY}`)
         const data = await response.data; 
-        console.log(data);
-        this.cities.push(data);
-        localStorage.setItem('cities', JSON.stringify(this.cities));
+        
+        // Adding the city to the userCities array
+        this.userCities.push(data);
+        localStorage.setItem('cities', JSON.stringify(this.userCities));
       } catch (error) {
-        alert("City not found");
+        alert("Please enter a valid city name");
       }
      
     },
@@ -66,6 +75,8 @@ export default {
   min-height: 100vh;
   margin: auto;
   color: white;
-  background-color: rgb(10, 28, 39);
+  // background-color: rgb(10, 28, 39);
+  background-color: rgb(2, 20, 32);
+ 
 }
 </style>
