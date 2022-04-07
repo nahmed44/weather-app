@@ -1,13 +1,16 @@
 <template>
-  <div v-if="cities.length  === 0" class="no-cities">
-      <p>Please add a city to get started.</p>
-  </div>
-  <div v-else class="home-view">
+  <div class="home-view">
     <div class="search-bar">
       <input type="text" v-model="cityName" placeholder="Add a city..."
       @keyup.enter="addCity"
       >
+      <!-- <div v-if="cities.length  === 0" class="no-cities">
+        <p>Please add a city to get started.</p>
+      </div> -->
     </div>
+    <div v-if="cities.length  === 0" class="no-cities">
+        <p>Please add a city to get started.</p>
+      </div>
 
     <div class="grid">
 
@@ -45,41 +48,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.no-cities {
-  position: absolute;
-  min-height: 100vh;
-  max-width: 820px;
-  width: 100%;
+// .no-cities {
+//   position: absolute;
+//   min-height: 100vh;
+//   max-width: 820px;
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   color: white;
+
+//   button{
+//     margin-top: 16px;
+//     padding: 8px 24px;
+//     border-radius: 8px;
+//     border: none;
+//     cursor: pointer;
+//     transition: 500ms ease all;
+
+//     &:hover {
+//     outline: none;
+//     transform: scale(0.98);
+//     }
+    
+//     &:focus {
+//       outline: none;
+//     }
+//   }
+// }
+
+.home-view {
+  margin: 40px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
 
-  button{
-    margin-top: 16px;
-    padding: 8px 24px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: 500ms ease all;
-
-    &:hover {
-    outline: none;
-    transform: scale(0.98);
-    }
-    
-    &:focus {
-      outline: none;
-    }
-  }
-}
-
-.home-view {
-  margin: 40px 30px;
 
   input{
-    min-width: 100%;
+    min-width: 90vw;
+    max-width: 820px;
     height: 40px;
     border: 1px solid black;
     border-radius: 20px;
@@ -93,6 +103,21 @@ export default {
       border: 1px solid white;
     }
   }
+
+  .no-cities {
+    // margin: 40px 0;
+    // text-align: center;
+  // position: absolute;
+  min-height: 100vh;
+  min-height: calc(100vh - 20vh);
+  // max-width: 820px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
 
 }
 .grid{

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="app">
     <!-- <Navbar /> -->
     
     <router-view 
@@ -59,7 +59,7 @@ export default {
   box-sizing: border-box;
   font-family: "Quicksand", "sans-serif";
 }
-.home{
+.app{
   display: flex;
   flex-direction: column;
   max-width: 820px;
