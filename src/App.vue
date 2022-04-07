@@ -1,30 +1,71 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div class="home">
+    <!-- <Navbar /> -->
+    
+    <router-view 
+    :cities="cities"
+    :edit="edit"
+    @add-city="addCity"
+    />
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import axios from 'axios';
+import Navbar from './components/Navbar.vue'
+export default {
+  name: 'App',
+  components: {
+    Navbar
+  },
+  data(){
+    return{
+      cities: [],
+      edit: false,
     }
-  }
+  },
+  created(){
+    try {
+      const userCities = JSON.parse(localStorage.getItem('cities'));
+      if(userCities){
+        this.cities = userCities;
+      }
+     } catch (error) {
+       console.log('in error');
+      console.log(error);  
+    }
+  },
+  methods: {
+    async addCity(city){
+      try {
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.VUE_APP_API_KEY}`)
+        const data = await response.data; 
+        console.log(data);
+        this.cities.push(data);
+        localStorage.setItem('cities', JSON.stringify(this.cities));
+      } catch (error) {
+        alert("City not found");
+      }
+     
+    },
+  },
+  
+}
+</script>
+<style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", "sans-serif";
+}
+.home{
+  display: flex;
+  flex-direction: column;
+  max-width: 820px;
+  min-height: 100vh;
+  margin: auto;
+  color: white;
+  background-color: rgb(10, 28, 39);
 }
 </style>
