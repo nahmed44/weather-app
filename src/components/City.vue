@@ -3,12 +3,7 @@
     <!-- Current Weather and its Icon -->
     <div class="weather">
       <span>{{ Math.round(this.city.main.temp) }}&deg;</span>
-      <img
-        :src="
-          require(`../../public/conditions/${this.city.weather[0].icon}.svg`)
-        "
-        alt="weather icon"
-      />
+      <img :src="require(`../../public/conditions/${this.city.weather[0].icon}.svg`)" alt="weather icon"/>
     </div>
     <!-- City & country Name -->
     <div class="city-country">
@@ -28,7 +23,12 @@
     </div>
 
     <!-- Delete city button -->
-    <span v-show="showDeleteCity" @click="removeCity" class="material-icons-round delete">delete_forever</span>
+    <span
+      v-show="showDeleteCity"
+      @click="removeCity"
+      class="material-icons-round delete"
+      >delete_forever</span
+    >
   </div>
 </template>
 
@@ -97,7 +97,6 @@ export default {
     bottom: 0px;
     left: 0px;
   }
-
 
   .weather {
     display: flex;

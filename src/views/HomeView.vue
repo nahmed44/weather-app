@@ -1,15 +1,15 @@
 <template>
   <div class="home-view">
     <div class="search-bar">
-      <input type="text" v-model="cityName" placeholder="Add a city..."
+      <input type="text" v-model="cityToAdd" placeholder="Add a city..."
       @keyup.enter="addCity">
     </div>
-    <div v-if="cities.length  === 0" class="no-cities">
+    <div v-if="userCities.length  === 0" class="no-cities">
         <p>Please add a city to get started.</p>
       </div>
 
     <div class="grid">
-      <div class="city" v-for="(city, index) in cities" :key="index">
+      <div class="city" v-for="(city, index) in userCities" :key="index">
         <City :city="city" :showDeleteCity="showDeleteCity"/>
       </div>
     </div>
@@ -18,29 +18,60 @@
 </template>
 
 <script>
+import axios from 'axios';
 import City from '@/components/City.vue'
 // @ is an alias to /src
 // https://dribbble.com/shots/15292603-Weather-Conceptual-App-Design#
 export default {
   name: "HomeView",
-  props: {
-    cities: Array,
-    showDeleteCity: Boolean,
-  },
   components: {
     City,
   },
   data(){
     return {
-      cityName: "",
+      cityToAdd: "",
+      userCities: [],
+      showDeleteCity: false,
     }
   },
-  
+  created(){
+    try {
+      // Upon first load, getting the cities from localStorage
+      const storedCities = JSON.parse(localStorage.getItem('cities'));
+      if(storedCities){
+        this.userCities = storedCities;
+      }
+     } catch (error) {
+      console.log('Created APP.vue: in error');
+      console.log(error);  
+    }
+  },
   methods: {
-    addCity(){
-      this.cityName.length <= 0 ? alert("Please enter city name") : null;
-      this.$emit("add-city", this.cityName);
-      this.cityName = "";
+    async addCity(){
+      try {
+        if (this.cityToAdd.length !== 0){
+          // Checking if city is already in the userCities array
+          const cityExists = this.userCities.find(city => city.name.toLowerCase() === this.cityToAdd.toLowerCase());
+          if(typeof(cityExists) !== 'undefined'){
+            this.cityToAdd = "";
+            alert(`${this.cityToAdd} is already in your list.`);
+            return;
+          }
+          // Getting the weather data
+          const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${this.cityToAdd}&appid=${process.env.VUE_APP_API_KEY}`)
+          const data = await response.data; 
+          
+          // Adding the new city to the userCities array
+          this.userCities.push(data);
+          localStorage.setItem('cities', JSON.stringify(this.userCities));
+          this.cityToAdd = "";
+        }
+        else{ // User didn't enter a city name
+          alert("Please enter city name")
+        }
+      } catch (error) { // User entered a city name that doesn't exist
+          alert("Please enter a valid city name");
+      }
     },
   },
 };
