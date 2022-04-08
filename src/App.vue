@@ -4,7 +4,7 @@
     
     <router-view 
     :cities="userCities"
-    :edit="edit"
+    :showDeleteCity="showDeleteCity"
     @add-city="addCity"
     />
   </div>
@@ -21,7 +21,7 @@ export default {
   data(){
     return{
       userCities: [],
-      edit: false,
+      showDeleteCity: true,
     }
   },
   created(){
@@ -46,7 +46,7 @@ export default {
           return;
         }
         // Getting the weather data
-        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityToAdd}&appid=${process.env.VUE_APP_API_KEY}`)
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${cityToAdd}&appid=${process.env.VUE_APP_API_KEY}`)
         const data = await response.data; 
         
         // Adding the city to the userCities array

@@ -1,115 +1,149 @@
 <template>
-   <div @click="goToWeather" class="city">
-      <i v-show="edit" @click="removeCity" class="fas fa-trash-alt edit" ref="edit"></i>
+  <div @click="goToWeather" class="city">
+    <!-- Current Weather and its Icon -->
+    <div class="weather">
+      <span>{{ Math.round(this.city.main.temp) }}&deg;</span>
+      <img
+        :src="
+          require(`../../public/conditions/${this.city.weather[0].icon}.svg`)
+        "
+        alt="weather icon"
+      />
+    </div>
+    <!-- City & country Name -->
+    <div class="city-country">
       <span>{{ this.city.name }}</span>
-      <div class="weather">
-        <!-- <span>{{ Math.round(this.city.currentWeather.main.temp)}}&deg;</span> -->
-        <!-- <img :src="require(`../../public/conditions/${this.city.currentWeather.weather[0].icon}.svg`)" alt="weather icon"> -->
+      <span>{{ this.city.sys.country }}</span>
+    </div>
+    <!-- Weather Description -->
+    <div class="humidity-speed">
+      <div class="humidity">
+        <span class="material-icons-outlined icon">water_drop</span>
+        <span>{{ this.city.main.humidity }}%</span>
       </div>
-      <!-- <div class="video">
-        <video autoplay loop muted :src="require(`../../public/videos/${this.city.currentWeather.weather[0].icon}.mp4`)"></video>
-      </div> -->
-      <div class="bg-overlay"></div>
+      <div class="speed">
+        <span class="material-icons-outlined icon">air</span>
+        <span>{{ Math.round(this.city.wind.speed) }}km/h</span>
+      </div>
+    </div>
+
+    <!-- Delete city button -->
+    <span v-show="showDeleteCity" @click="removeCity" class="material-icons-round delete">delete_forever</span>
   </div>
 </template>
 
 <script>
 export default {
-    name: "City",
-    props: {
-        city: Object,
-        edit: Boolean,
-    },
-    // created(){
-    //     console.log(this.city);
-    //     console.log(`Type of city:${typeof(this.city)}`);
-    // }
-}
+  name: "City",
+  props: {
+    city: Object,
+    showDeleteCity: Boolean,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
+.city {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  flex-basis: 50%;
+  max-width: 820px;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+  background-color: rgb(13, 40, 54);
+  // box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.5);
 
-.city{
+  @media (min-width: 750px) {
+    .city {
+      .weather {
+        span {
+          font-size: 70px;
+        }
+        img {
+          height: 70px;
+        }
+      }
+      .city-country {
+        span {
+          font-size: 25px;
+        }
+      }
+      .humidity-speed {
+        .humidity,
+        .speed {
+          span {
+            font-size: 20px;
+          }
+          .icon {
+            font-size: 25px;
+          }
+        }
+      }
+    }
+  }
+
+  .delete {
+    border-radius: 0px 15px 0 0;
+    border: 7px solid rgb(77, 77, 77);
+    background-color: rgb(77, 77, 77);
+    z-index: 1;
+    font-size: 25px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+  }
+
+
+  .weather {
     display: flex;
-    position: relative;
+    justify-content: space-between;
+    z-index: 1;
+
+    span {
+      font-size: 10vw;
+    }
+
+    img {
+      display: flex;
+      align-self: center;
+      height: 10vw;
+      width: auto;
+    }
+  }
+  .city-country {
+    display: flex;
     flex-direction: column;
-    padding: 20px;
-    flex-basis: 50%;
-    min-height: 250px;
-    min-height: 20vh;
-    max-height: 150px;
-    color: white;
-    border: 1px solid transparent;
-    border-radius: 20px;
-    transition: all 0.3s ease-in-out;
-    // box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.5);
-    background-color: rgb(13, 40, 54);
+    margin: 10px 0;
+    font-size: 4vw;
+    span:nth-child(2) {
+      color: rgb(68, 99, 115);
+    }
+  }
+  .humidity-speed {
+    display: flex;
+    justify-content: space-between;
+    font-size: 3vw;
+    padding: 0;
+    margin: 0;
 
-    @media(min-width: 450px){
-        min-height: 25vh;
+    .icon {
+      font-size: 4vw;
+      color: rgb(95, 125, 140);
     }
 
-    .edit {
-        border-radius: 0px 15px 0 0;
-        border: 10px solid rgb(77, 77, 77);
-        background-color: rgb(77, 77, 77);
-        z-index: 1;
-        font-size: 20px;
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
+    .humidity,
+    .speed {
+      display: flex;
+      span:nth-child(2) {
+        margin-left: 3px;
+      }
     }
-
-    span{
-        z-index: 1;
-        text-transform: capitalize;
-        display: block;
-        font-size: 25px;
-        font-weight: 600;
-    }
-
-    .weather{
-        display: flex;
-        z-index: 1;
-        justify-content: flex-end;
-        align-items: flex-end;
-        flex: 1;
-
-        span{
-            font-size: 35px;
-            margin-right: 8px;
-        }
-
-        img{
-            height: 20px;
-            width: auto;
-        }
-    }
-    .video{
-        overflow: hidden;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        video{
-            height: 100%;
-            @media(min-width: 900px){
-                height: auto;
-                width: 100%;
-            }
-        }
-
-        .bg-overlay{
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            background-color: rgba(0,0,0, 0.2);
-        }
-    }
+  }
 }
-
 </style>
 

@@ -10,7 +10,7 @@
 
     <div class="grid">
       <div class="city" v-for="(city, index) in cities" :key="index">
-        <City :city="city" :edit="edit"/>
+        <City :city="city" :showDeleteCity="showDeleteCity"/>
       </div>
     </div>
 
@@ -25,7 +25,7 @@ export default {
   name: "HomeView",
   props: {
     cities: Array,
-    edit: Boolean,
+    showDeleteCity: Boolean,
   },
   components: {
     City,
@@ -105,7 +105,7 @@ export default {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media(min-width: 520px){
+  @media(min-width: 600px){
     grid-template-columns: repeat(3, 1fr);
   }
 }
