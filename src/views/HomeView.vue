@@ -39,10 +39,9 @@ export default {
       // Upon first load, getting the cities from localStorage
       const storedCities = JSON.parse(localStorage.getItem('cities'));
       if(storedCities){
-        this.userCities = storedCities;
+        this.fetchCities(storedCities);
       }
      } catch (error) {
-      console.log('Created APP.vue: in error');
       console.log(error);  
     }
   },
@@ -71,6 +70,28 @@ export default {
         }
       } catch (error) { // User entered a city name that doesn't exist
           alert("Please enter a valid city name");
+      }
+    },
+
+    async fetchCities(storedCities){
+      try {
+        const threeHours = 3 * 60 * 60; // 3 hours in seconds
+        const now = Math.floor(Date.now()/1000); // Current time in seconds
+
+        storedCities.forEach(async (city, index) => {
+          const lastFetch = city.dt;	
+          // If the last fetch was more than 3 hours ago, we fetch the new data
+          if(now - lastFetch > threeHours){
+            console.log('fetching new data ' + city.name);
+            const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city.name}&appid=${process.env.VUE_APP_API_KEY}`)
+            const data = await response.data;
+            storedCities[index] = data;
+          }
+        });
+        this.userCities = storedCities;
+        console.log(new Date(this.userCities[0].dt * 1000));
+      } catch (error) {
+        console.log(error);
       }
     },
   },
