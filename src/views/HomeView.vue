@@ -1,19 +1,23 @@
 <template>
-  <div class="home-view">
-    <div class="search-bar">
-      <input type="text" v-model="cityToAdd" placeholder="Add a city..."
-      @keyup.enter="addCity">
+  <div >
+    <div v-if="loading" class="loading">
+      <span></span>
     </div>
-    <div v-if="userCities.length  === 0" class="no-cities">
+    <div v-if="!loading" class="home-view">
+      <div class="search-bar">
+        <input type="text" v-model="cityToAdd" placeholder="Add a city..."
+        @keyup.enter="addCity">
+      </div>
+      <div v-if="userCities.length  === 0" class="no-cities">
         <p>Please add a city to get started.</p>
       </div>
 
-    <div class="grid">
-      <div class="city" v-for="(city, index) in userCities" :key="index">
-        <City :city="city" :showDeleteCity="showDeleteCity" @deleteCity="deleteCity"/>
+      <div class="grid">
+        <div class="city" v-for="(city, index) in userCities" :key="index">
+          <City :city="city" :showDeleteCity="showDeleteCity" @deleteCity="deleteCity"/>
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -34,7 +38,7 @@ export default {
     return {
       cityToAdd: "",
       userCities: [],
-      // showDeleteCity: false,
+      loading: true,
     }
   },
   created(){
@@ -43,6 +47,9 @@ export default {
       const storedCities = JSON.parse(localStorage.getItem('cities'));
       if(storedCities){
         this.fetchCities(storedCities);
+      }
+      else {
+        this.loading = false;
       }
      } catch (error) {
       console.log(error);  
@@ -87,18 +94,30 @@ export default {
         const threeHours = 3 * 60 * 60; // 3 hours in seconds
         const now = Math.floor(Date.now()/1000); // Current time in seconds
 
-        storedCities.forEach(async (city, index) => {
+        this.userCities = await Promise.all(storedCities.map(async (city) => {
           const lastFetch = city.dt;	
           // If the last fetch was more than 3 hours ago, we fetch the new data
           if(now - lastFetch > threeHours){
             console.log('fetching new data ' + city.name);
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city.name}&appid=${process.env.VUE_APP_API_KEY}`)
             const data = await response.data;
-            storedCities[index] = data;
+            return data;
           }
-        });
-        this.userCities = storedCities;
-        // console.log(new Date(this.userCities[0].dt * 1000));
+          else{
+            return city;
+          }
+        }));
+
+        // waiting for the promises to resolve before setting loading to false
+        this.interval = setInterval(() => {
+          if (this.userCities.length == storedCities.length){
+            localStorage.setItem('cities', JSON.stringify(this.userCities));
+            this.loading = false;
+            clearInterval(this.interval);
+            return;
+          }
+          console.log('resetting interval');
+        }, 200);
       } catch (error) {
         console.log(error);
       }

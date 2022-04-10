@@ -26,8 +26,9 @@
     <span
       title="Delete city"
       v-show="showDeleteCity"
-      @click="$emit('deleteCity', city)"
+      @click="deleteCity"
       class="material-icons-round delete"
+      ref="delete"
       >delete_forever</span
     >
   </div>
@@ -40,6 +41,33 @@ export default {
   props: {
     city: Object,
     showDeleteCity: Boolean,
+  },
+  data() {
+    return {
+      self: this,
+    };
+  },
+  methods: {
+    deleteCity(e){
+      console.log(e);
+      if (e.target === this.$refs.delete){
+        this.$emit('deleteCity', this.city);
+      }
+    },
+    goToWeather(e){
+      if (e.target !== this.$refs.delete){
+        this.$router.push({
+          name: 'weather',
+          params: {
+            city: this.city.name.toLowerCase(),
+          },
+          query: {
+            lon: this.city.coord.lon,
+            lat: this.city.coord.lat,
+          }
+        });
+      }
+    },
   },
 };
 </script>
