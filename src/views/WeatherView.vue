@@ -1,8 +1,13 @@
 <template>
-  <div class="weather">
-    <div class="weather-wrap">
-      <CurrentWeather v-if="forcast !== null" :isNight="true" :forcast="forcast"/>
-
+  <div class="main">
+    <div v-if="loading" class="loading">
+        <span></span>
+    </div>
+    <div v-else class="weather">
+      <div class="weather-wrap">
+        <CurrentWeather v-if="forcast !== null" :isNight="true" :forcast="forcast"/>
+        <HourlyWeather :forcast="forcast" />
+      </div>
     </div>
   </div>
 </template>
@@ -10,10 +15,12 @@
 <script>
 import axios from 'axios';
 import CurrentWeather from '@/components/CurrentWeather.vue';
+import HourlyWeather from '@/components/HourlyWeather.vue';
 export default {
   name: "Weather",
   components: {
     CurrentWeather,
+    HourlyWeather,
   },
   data(){
     return {
@@ -27,7 +34,6 @@ export default {
     this.lon = this.$route.query.lon;
     this.lat = this.$route.query.lat;
     this.getForcast();
-    console.log('in created');
   },
   methods:{
     getForcast(){
