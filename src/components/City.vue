@@ -24,8 +24,9 @@
 
     <!-- Delete city button -->
     <span
+      title="Delete city"
       v-show="showDeleteCity"
-      @click="removeCity"
+      @click="$emit('deleteCity', city)"
       class="material-icons-round delete"
       >delete_forever</span
     >
@@ -35,6 +36,7 @@
 <script>
 export default {
   name: "City",
+  emits: ['deleteCity'],
   props: {
     city: Object,
     showDeleteCity: Boolean,
@@ -89,13 +91,14 @@ export default {
 
   .delete {
     border-radius: 0px 15px 0 0;
-    border: 7px solid rgb(77, 77, 77);
-    background-color: rgb(77, 77, 77);
+    border: 7px solid rgb(68, 99, 115);
+    background-color:rgb(68, 99, 115);
     z-index: 1;
     font-size: 25px;
     position: absolute;
     bottom: 0px;
     left: 0px;
+    cursor: pointer;
   }
 
   .weather {
@@ -120,7 +123,7 @@ export default {
     margin: 10px 0;
     font-size: 4vw;
     span:nth-child(2) {
-      color: rgb(68, 99, 115);
+      color: rgb(95, 125, 140);
     }
   }
   .humidity-speed {

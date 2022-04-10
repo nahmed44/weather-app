@@ -1,7 +1,7 @@
 <template>
     <header>
         <nav>
-            
+            <span @click="$emit('showDeleteCity')" class="material-icons-outlined">edit</span>
         </nav>
     </header>
 </template>
@@ -9,14 +9,19 @@
 <script>
 export default {
     name: 'Navbar',
+    emits: ['showDeleteCity'],
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
 nav{
-    background-color: rgb(65, 80, 119);
     color: white;
     padding: 10px;
-    text-align: center;
+    text-align: end;
+
+    span{
+        cursor: pointer;
+    }
 }
 </style>

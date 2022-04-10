@@ -10,7 +10,7 @@
 
     <div class="grid">
       <div class="city" v-for="(city, index) in userCities" :key="index">
-        <City :city="city" :showDeleteCity="showDeleteCity"/>
+        <City :city="city" :showDeleteCity="showDeleteCity" @deleteCity="deleteCity"/>
       </div>
     </div>
 
@@ -27,11 +27,14 @@ export default {
   components: {
     City,
   },
+  props: {
+    showDeleteCity: Boolean,
+  },
   data(){
     return {
       cityToAdd: "",
       userCities: [],
-      showDeleteCity: false,
+      // showDeleteCity: false,
     }
   },
   created(){
@@ -73,6 +76,12 @@ export default {
       }
     },
 
+    async deleteCity(city){
+      // Removing the city from the userCities array
+      this.userCities = this.userCities.filter(userCity => userCity.name !== city.name);
+      localStorage.setItem('cities', JSON.stringify(this.userCities));
+    },
+
     async fetchCities(storedCities){
       try {
         const threeHours = 3 * 60 * 60; // 3 hours in seconds
@@ -89,7 +98,7 @@ export default {
           }
         });
         this.userCities = storedCities;
-        console.log(new Date(this.userCities[0].dt * 1000));
+        // console.log(new Date(this.userCities[0].dt * 1000));
       } catch (error) {
         console.log(error);
       }
@@ -100,7 +109,7 @@ export default {
 
 <style lang="scss" scoped>
 .home-view {
-  margin: 40px 20px;
+  margin: 10px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Navbar />
-    <router-view />
+    <Navbar @showDeleteCity="showDeleteCity = !showDeleteCity"/>
+    <router-view :showDeleteCity="showDeleteCity"/>
   </div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   components: {
     Navbar
   }, 
+  data() {
+    return {
+      showDeleteCity: false,
+    }
+  },
 }
 </script>
 <style lang="scss">
