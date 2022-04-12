@@ -7,6 +7,7 @@
       <div class="weather-wrap">
         <CurrentWeather v-if="forcast !== null" :isNight="true" :forcast="forcast"/>
         <HourlyWeather :forcast="forcast" />
+        <WeeklyForcast :forcast="forcast"/>
       </div>
     </div>
   </div>
@@ -16,11 +17,14 @@
 import axios from 'axios';
 import CurrentWeather from '@/components/CurrentWeather.vue';
 import HourlyWeather from '@/components/HourlyWeather.vue';
+import WeeklyForcast from '@/components/WeeklyForcast.vue';
+
 export default {
   name: "Weather",
   components: {
     CurrentWeather,
     HourlyWeather,
+    WeeklyForcast,
   },
   data(){
     return {
