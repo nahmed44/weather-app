@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .weekly-forcast {
-  padding: 30px 0;
+  padding: 30px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.7);
 
   .daily {

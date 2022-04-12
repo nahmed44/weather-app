@@ -8,6 +8,7 @@
         <CurrentWeather v-if="forcast !== null" :isNight="true" :forcast="forcast"/>
         <HourlyWeather :forcast="forcast" />
         <WeeklyForcast :forcast="forcast"/>
+        <AdditionalInfo :forcast="forcast" />
       </div>
     </div>
   </div>
@@ -18,6 +19,7 @@ import axios from 'axios';
 import CurrentWeather from '@/components/CurrentWeather.vue';
 import HourlyWeather from '@/components/HourlyWeather.vue';
 import WeeklyForcast from '@/components/WeeklyForcast.vue';
+import AdditionalInfo from '@/components/AdditionalInfo.vue';
 
 export default {
   name: "Weather",
@@ -25,6 +27,7 @@ export default {
     CurrentWeather,
     HourlyWeather,
     WeeklyForcast,
+    AdditionalInfo,
   },
   data(){
     return {
@@ -48,6 +51,7 @@ export default {
         )
         .then(response => {
           this.forcast = response.data;
+          console.log(this.forcast);
           this.loading = false;
           this.getCurrentTime();
         });
