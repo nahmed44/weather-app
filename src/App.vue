@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <Navbar @showDeleteCity="showDeleteCity = !showDeleteCity" :onHome="onHome"/>
+  <div id="app" :style="{color: $store.state.textColor, 'background-color': $store.state.bodyBgColor }">
+  <!-- <div  :style="{color: $store.state.textColor, 'background-color': $store.state.bodyBgColorz }"> -->
+    <!-- <Navbar @showDeleteCity="showDeleteCity = !showDeleteCity" :onHome="onHome"/> -->
     <router-view :showDeleteCity="showDeleteCity"/>
   </div>
 </template>
@@ -18,6 +19,11 @@ export default {
       onHome: null,
     }
   },
+  created(){
+    console.log(localStorage.getItem('darkMode') === 'true');
+    this.$store.dispatch('checkDarkMode', true);
+  },
+  
   watch:{
     $route(){
       this.$route.name === 'home' ? this.onHome = true : this.onHome = false;
@@ -26,10 +32,12 @@ export default {
 }
 </script>
 <style lang="scss">
-* {
+// * {
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: #f1f1f1;
   font-family: "Quicksand", "sans-serif";
 }
 #app{
@@ -38,9 +46,16 @@ export default {
   max-width: 820px;
   min-height: 100vh;
   margin: auto;
-  color: white;
+  transition: all 0.4s ease-in;
+  // color: black;
   // background-color: rgb(10, 28, 39);
-  background-color: rgb(2, 20, 32);
+  // background-color: rgba(208, 205, 205, 0.571);
+
+  // @media (prefers-color-scheme: dark) {
+  //   background-color: rgb(2, 20, 32);
+  //   color: white
+  // }
+    
 }
 .loading {
   @keyframes spin {
@@ -53,7 +68,7 @@ export default {
   width: 100%;
   justify-content: center;
   align-items: center;
-  // background-color: rgb(186, 182, 182);
+  
   span {
     display: block;
     width: 60px;

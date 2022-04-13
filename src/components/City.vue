@@ -1,9 +1,9 @@
 <template>
-  <div @click="goToWeather" class="city">
+  <div @click="goToWeather" class="city" :style="{'background-color': $store.state.cityBgColor }">
     <!-- Current Weather and its Icon -->
     <div class="weather">
       <span>{{ Math.round(this.city.main.temp) }}&deg;</span>
-      <img :src="require(`../../public/conditions/${this.city.weather[0].icon}.svg`)" alt="weather icon"/>
+      <img :src="require(`../../public/conditions/${this.city.weather[0].icon}.svg`)" :style="{filter: getFilter}"  alt="weather icon"/>
     </div>
     <!-- City & country Name -->
     <div class="city-country">
@@ -28,6 +28,7 @@
       v-show="showDeleteCity"
       @click="deleteCity"
       class="material-icons-round delete"
+      :style="{'background-color': $store.state.bodyBgColor, 'border-color': $store.state.bodyBgColor }"
       ref="delete"
       >delete_forever</span
     >
@@ -69,6 +70,19 @@ export default {
       }
     },
   },
+
+  computed: {
+    // Color filter for weather icon based on background color
+    getFilter(){
+      if (this.$store.state.darkMode){
+        return 'invert(0)';
+      }
+      else {
+        return 'invert(1)';
+      }
+    },
+  }
+  
 };
 </script>
 
@@ -81,12 +95,19 @@ export default {
   padding: 15px;
   flex-basis: 50%;
   max-width: 820px;
-  color: white;
   border: 1px solid transparent;
   border-radius: 20px;
-  transition: all 0.3s ease-in-out;
-  background-color: rgb(13, 40, 54);
+  // transition: all 0.3s ease-in-out;
+  // color: white;
+  // background-color: rgb(13, 40, 54);
   // box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.5);
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.98);
+    border: 1px solid white;
+    box-shadow: 0 1.5px 2px 0 rgba(23, 23, 23, 0.5);
+  }
 
   @media (min-width: 750px) {
     .city {
@@ -118,9 +139,11 @@ export default {
   }
 
   .delete {
-    border-radius: 0px 15px 0 0;
-    border: 7px solid rgb(68, 99, 115);
-    background-color:rgb(68, 99, 115);
+    border-radius: 0px 15px 0 15px;
+    // border: 7px solid rgb(68, 99, 115);
+    border: 7px solid;
+    // border-color: ;
+    // background-color:rgb(68, 99, 115);
     z-index: 1;
     font-size: 25px;
     position: absolute;
@@ -143,6 +166,8 @@ export default {
       align-self: center;
       height: 10vw;
       width: auto;
+      // filter: invert(1);
+
     }
   }
   .city-country {

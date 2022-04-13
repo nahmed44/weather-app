@@ -5,7 +5,7 @@
         new Date(this.day.dt * 1000).toLocaleString("en-us", {weekday: "long",})}}</span>
     </div>
     <div class="condition">
-      <img :src="require(`../../public/conditions/${this.day.weather[0].icon}.svg`)" alt="Weather condition icon"/>
+      <img :src="require(`../../public/conditions/${this.day.weather[0].icon}.svg`)" :style="{filter: getFilter}" alt="Weather condition icon"/>
     </div>
     <div class="weather">
       <span class="high">{{ Math.round(this.day.temp.max) }}&deg;</span>
@@ -20,6 +20,17 @@ export default {
   props: {
     day: Object,
   },
+  computed: {
+    // Color filter for weather icon based on background color
+    getFilter(){
+      if (this.$store.state.darkMode){
+        return 'invert(0)';
+      }
+      else {
+        return 'invert(1)';
+      }
+    },
+  }
 };
 </script>
 
@@ -28,7 +39,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: white;
 
   div {
     flex: 1;

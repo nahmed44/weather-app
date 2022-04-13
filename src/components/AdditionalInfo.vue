@@ -45,7 +45,6 @@ export default {
   padding: 30px 20px;
   display: flex;
   flex-wrap: wrap;
-  color: white;
 
   > div {
     display: flex;

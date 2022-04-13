@@ -1,17 +1,30 @@
 <template>
   <div >
+    <!-- Showing loading spinner on initial load when fetching user cities list from the local storage  -->
     <div v-if="loading" class="loading">
       <span></span>
     </div>
+    <!-- Displaying the homepage -->
     <div v-if="!loading" class="home-view">
+       <header>
+        <nav>
+          <div class="nav">
+            <Toggle v-model="$store.state.toggleValue" v-bind="$store.state.toggleValue" on-label="On" off-label="Off" @change="$store.dispatch('storeUserPreference')" class="toggle" :title="darkModeTitle"/>
+            <span @click="showDeleteCity = !showDeleteCity" class="material-icons-outlined" title="Show Delete City">edit</span>
+          </div>
+        </nav>
+      </header>
+      <!-- Search Bar -->
       <div class="search-bar">
         <input type="text" v-model="cityToAdd" placeholder="Add a city..."
-        @keyup.enter="addCity">
+        @keyup.enter="addCity"
+        :style="{'background-color': $store.state.bodyBgColor }">
       </div>
+      <!-- Add city msg if user has yet to add cities to thier list -->
       <div v-if="userCities.length  === 0" class="no-cities">
         <p>Please add a city to get started.</p>
       </div>
-
+      <!-- List of cities -->
       <div class="grid">
         <div class="city" v-for="(city, index) in userCities" :key="index">
           <City :city="city" :showDeleteCity="showDeleteCity" @deleteCity="deleteCity"/>
@@ -24,12 +37,14 @@
 <script>
 import axios from 'axios';
 import City from '@/components/City.vue'
+import Toggle from '@vueform/toggle'
 // @ is an alias to /src
 // https://dribbble.com/shots/15292603-Weather-Conceptual-App-Design#
 export default {
   name: "HomeView",
   components: {
     City,
+    Toggle,
   },
   props: {
     showDeleteCity: Boolean,
@@ -39,6 +54,7 @@ export default {
       cityToAdd: "",
       userCities: [],
       loading: true,
+      showDeleteCity: false,
     }
   },
   created(){
@@ -123,9 +139,15 @@ export default {
       }
     },
   },
+  computed: {
+    darkModeTitle(){
+      return this.$store.state.darkMode ? 'Disable Dark Mode' : 'Enable Light Mode';
+    
+    }
+  }
 };
 </script>
-
+<style src="@vueform/toggle/themes/default.css"></style>
 <style lang="scss" scoped>
 .home-view {
   margin: 10px 20px;
@@ -133,31 +155,66 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  position: relative;
+  // color: white;
 
+  header{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    .nav{
+      display: flex;
+      margin-top: 5px;
+
+      .toggle{
+        --toggle-bg-on: rgb(13, 40, 54);
+        --toggle-bg-off: #d0cdcd92;
+        --toggle-border-on: rgb(13, 40, 54);
+        --toggle-font-size: 0.85rem;
+        --toggle-duration: 400ms;
+        --toggle-ring-width: 0rem;
+        --toggle-height: 1.35rem;
+        --toggle-width: 3.2rem;
+        --toggle-border: 0;
+      }
+    
+      span{
+        margin-left: 15px;
+        cursor: pointer;
+        text-align: center;
+      }
+    }
+  }
+  
   .search-bar{
     width: 100%;
+    padding-top: 20px;
   
     input{
       height: 40px;
-      min-width: 100%;
+      // min-width: 100%;
+      min-width: 97%;
       max-width: 820px;
       border: none;
       border-radius: 20px;
-      padding: 0 20px;
+      // padding-left: 20px 0;
+      padding: 0 0 0 20px;
       font-size: 16px;
-      color: rgb(139, 144, 147);
-      background-color: rgb(10, 28, 39);
+      outline: none;
+      // color: rgb(139, 144, 147);
+      // color: white;
+      // background-color: rgb(10, 28, 39);
       transition: 500ms ease all;
 
       &:hover {
         outline: none;
         transform: scale(0.98);
-        }
+      }
       &:focus {
         outline: none;
         border: 1px solid white;
-        color: white;
+        // color: white;
       }
     } 
   }
@@ -170,7 +227,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
   }
 
 }
