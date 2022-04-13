@@ -46,9 +46,6 @@ export default {
     City,
     Toggle,
   },
-  props: {
-    showDeleteCity: Boolean,
-  },
   data(){
     return {
       cityToAdd: "",

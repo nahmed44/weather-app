@@ -2,17 +2,16 @@
   <div class="current-weather">
     <div class="container">
       <div class="weather-info">
+        <!-- Current city & it's temperature -->
         <span class="city">{{ this.$route.params.city }}</span>
-        <!-- <span class="city">{{ cityName }}</span> -->
         <span class="current-temperature">{{ Math.round(this.forcast.current.temp) }}</span>
+        <!-- Today's high & low temperatures -->
         <div class="high-low-temperatures">
           <div class="high">
-            <!-- <i class="fas fa-chevron-up"></i> -->
             <i class="material-icons-outlined">expand_less</i>
             <span>{{ Math.round(this.forcast.daily[0].temp.max) }}&deg;</span>
           </div>
           <div class="low">
-            <!-- <i class="fas fa-chevron-down"></i> -->
             <i class="material-icons-outlined">expand_more</i>
             <span>{{ Math.round(this.forcast.daily[0].temp.min) }}&deg;</span>
           </div>
@@ -20,6 +19,7 @@
         <span class="condition">{{ this.forcast.current.weather[0].description }}</span>
         <span class="feels-like">Feels like {{ Math.round(this.forcast.current.feels_like) }}&deg;</span>
       </div>
+      <!-- Weather icon on the right -->
       <div class="weather-icon">
         <img v-if="!isNight" src="../../public/sun.png" alt="" />
         <img v-if="isNight" src="../../public/moon.png" alt="" />
@@ -48,7 +48,6 @@ export default {
     min-height: 330px;
     position: relative;
     display: flex;
-    // color: #fff;
   }
 
   span {
@@ -56,8 +55,6 @@ export default {
   }
 
   .weather-info {
-    // padding-top: 30px;
-    // flex: 1;
 
     .city {
       font-size: 24px;
@@ -84,7 +81,6 @@ export default {
       }
       span {
           padding-top: 8px;
-        // margin-left: 3px;
       }
     }
   }

@@ -1,12 +1,15 @@
 <template>
   <div class="hour">
+    <!-- Hour -->
     <span>{{ new Date(this.time.dt * 1000).toLocaleString("en-us", { hour: "numeric" }) }}</span>
+    <!-- Hour temperature weather icon -->
     <span>
       <img
         :src="require(`../../public/conditions/${this.time.weather[0].icon}.svg`)"
         :style="{ filter: getFilter }"
         alt="current weather condition icon"/>
     </span>
+    <!-- Hour temperature -->
     <span>{{ Math.round(this.time.temp) }}&deg;</span>
   </div>
 </template>

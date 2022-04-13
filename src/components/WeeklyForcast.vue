@@ -1,6 +1,7 @@
 <template>
   <div class="weekly-forcast">
     <div class="container">
+      <!-- Rendering a list for next 7 days -->
       <div class="daily" v-for="(day, index) in filterList" :key="index">
         <DailyForcast :day="day" />
       </div>
@@ -20,6 +21,7 @@ export default {
     DailyForcast,
   },
   computed: {
+    // Filtering the forcast list to only show the next 7 days
     filterList() {
       return this.forcast.daily.slice(1, 8);
     },
