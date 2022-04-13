@@ -103,7 +103,7 @@ export default {
   nav {
     display: flex;
     justify-content: space-between;
-    padding: 30px 0;
+    padding-top: 30px ;
   }
   .back-button{
     font-size: 1.5rem;

@@ -40,7 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .current-weather {
-  margin-top: 90px;
+  margin-top: 50px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.7);
 
   .container {

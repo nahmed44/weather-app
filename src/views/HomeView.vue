@@ -153,7 +153,6 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
-  // color: white;
 
   header{
     width: 100%;
@@ -190,18 +189,13 @@ export default {
   
     input{
       height: 40px;
-      // min-width: 100%;
       min-width: 97%;
       max-width: 820px;
       border: none;
       border-radius: 20px;
-      // padding-left: 20px 0;
       padding: 0 0 0 20px;
       font-size: 16px;
       outline: none;
-      // color: rgb(139, 144, 147);
-      // color: white;
-      // background-color: rgb(10, 28, 39);
       transition: 500ms ease all;
 
       &:hover {
@@ -211,7 +205,6 @@ export default {
       &:focus {
         outline: none;
         border: 1px solid white;
-        // color: white;
       }
     } 
   }
@@ -230,10 +223,8 @@ export default {
 .grid{
   display: grid;
   padding-top: 30px;
-  // background-color: #31363d;
   width: 100%;
   gap: 20px;
-  // min-height: 100vh;
   @media(min-width: 340px){
     grid-template-columns: repeat(2, 1fr);
   }
