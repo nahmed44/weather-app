@@ -18,7 +18,7 @@
       <div class="search-bar">
         <input type="text" v-model="cityToAdd" placeholder="Add a city..."
         @keyup.enter="addCity"
-        :style="{'background-color': $store.state.bodyBgColor }">
+        :style="{'background-color': $store.state.cityBgColor, color: $store.state.textColor  }">
       </div>
       <!-- Add city msg if user has yet to add cities to thier list -->
       <div v-if="userCities.length  === 0" class="no-cities">
@@ -75,8 +75,8 @@ export default {
           // Checking if city is already in the userCities array
           const cityExists = this.userCities.find(city => city.name.toLowerCase() === this.cityToAdd.toLowerCase());
           if(typeof(cityExists) !== 'undefined'){
-            this.cityToAdd = "";
             alert(`${this.cityToAdd} is already in your list.`);
+            this.cityToAdd = "";
             return;
           }
           // Getting the weather data
@@ -132,7 +132,8 @@ export default {
           console.log('resetting interval');
         }, 200);
       } catch (error) {
-        console.log(error);
+        alert('Enable to fetch forcast data! ')
+        console.log('Enable to fetch forcast data! ', error);
       }
     },
   },

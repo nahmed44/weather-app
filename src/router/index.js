@@ -11,8 +11,7 @@ const routes = [
   {
     path: "/weather/:city",
     name: "weather",
-    // props: true,
-    component: () => import(/* webpackChunkName: "about" */ "../views/WeatherView.vue"),
+    component: () => import(/* webpackChunkName: "weather" */ "../views/WeatherView.vue"),
   },
 ];
 

@@ -1,27 +1,33 @@
 <template>
   <div id="app" :style="{color: $store.state.textColor, 'background-color': $store.state.bodyBgColor }">
-    <router-view :showDeleteCity="showDeleteCity"/>
+    <router-view v-slot="{ Component }">
+      <transition mode="out-in" name="fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'
 export default {
-  name: 'App',
-  components: {
-    Navbar
-  }, 
+  name: 'App', 
   created(){
     this.$store.dispatch('checkDarkMode', true);
   },
 }
 </script>
 <style lang="scss">
-
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s ease-out;
+}
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: none;
   background: #f1f1f1;
   font-family: "Quicksand", "sans-serif";
 }
@@ -60,5 +66,14 @@ body {
     border-radius: 50%;
     animation: spin ease 1000ms infinite;
   }
+}
+@-moz-document url-prefix() { /* Disable scrollbar Firefox */
+  html{
+    scrollbar-width: none;
+  }
+}
+body::-webkit-scrollbar { /* Disable scrollbar Chrome/Safari/Webkit */
+  width: 0px;
+  background: transparent; 
 }
 </style>

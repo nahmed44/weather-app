@@ -69,7 +69,6 @@ export default {
           )
           .then((response) => {
             this.forcast = response.data;
-            console.log(this.forcast);
             this.loading = false;
             this.getCurrentTime();
           });
@@ -96,7 +95,6 @@ export default {
 <style lang="scss" scoped>
 .weather {
   transition: 500ms ease;
-  // overflow: scroll;
   width: 100%;
   height: 100%;
 

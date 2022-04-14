@@ -38,6 +38,7 @@ export default {
     overflow: scroll;
     padding: 0;
     margin: 0 20px;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
       display: none;

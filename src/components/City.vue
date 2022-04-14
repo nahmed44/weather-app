@@ -26,7 +26,7 @@
     <span
       title="Delete city"
       v-show="showDeleteCity"
-      @click="deleteCity"
+      @click.stop="deleteCity"
       class="material-icons-round delete"
       :style="{'background-color': $store.state.bodyBgColor, 'border-color': $store.state.bodyBgColor }"
       ref="delete"
@@ -43,14 +43,8 @@ export default {
     city: Object,
     showDeleteCity: Boolean,
   },
-  data() {
-    return {
-      self: this,
-    };
-  },
   methods: {
     deleteCity(e){
-      console.log(e);
       if (e.target === this.$refs.delete){
         this.$emit('deleteCity', this.city);
       }
@@ -97,10 +91,6 @@ export default {
   max-width: 820px;
   border: 1px solid transparent;
   border-radius: 20px;
-  // transition: all 0.3s ease-in-out;
-  // color: white;
-  // background-color: rgb(13, 40, 54);
-  // box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.5);
 
   &:hover {
     cursor: pointer;
@@ -140,10 +130,7 @@ export default {
 
   .delete {
     border-radius: 0px 15px 0 15px;
-    // border: 7px solid rgb(68, 99, 115);
     border: 7px solid;
-    // border-color: ;
-    // background-color:rgb(68, 99, 115);
     z-index: 1;
     font-size: 25px;
     position: absolute;
@@ -166,8 +153,6 @@ export default {
       align-self: center;
       height: 10vw;
       width: auto;
-      // filter: invert(1);
-
     }
   }
   .city-country {
