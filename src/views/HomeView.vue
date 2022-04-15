@@ -154,6 +154,7 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
+  margin-bottom: 80px;
 
   header{
     width: 100%;

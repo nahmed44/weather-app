@@ -5,6 +5,17 @@
         <component :is="Component" />
       </transition>
     </router-view>
+    <footer>
+      <div class="footer">
+        <div class="social-link">
+          <a href="https://www.linkedin.com/in/noman--ahmed/" target="_blank"><img src="https://img.icons8.com/color/48/000000/linkedin-circled--v1.png" alt="linkedin icon"></a>
+          <a href="https://github.com/nahmed44/weather-app" target="_blank"><img src="https://img.icons8.com/glyph-neue/64/000000/github.png" alt="github icon" :style="{filter: getFilter}"></a>
+        </div>
+        <div class="copyright">
+          <p>&copy; {{new Date().getFullYear()}} Noman Ahmed</p>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -13,6 +24,16 @@ export default {
   name: 'App', 
   created(){
     this.$store.dispatch('checkDarkMode', true);
+  },
+  computed: {
+    // Color filter for weather icon based on background color
+    getFilter() {
+      if (this.$store.state.darkMode) {
+        return "invert(1)";
+      } else {
+        return "invert(0)";
+      }
+    },
   },
 }
 </script>
@@ -42,7 +63,40 @@ body {
   margin: auto;
   transition: all 0.4s ease-in;
 }
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 72px;
+  border-top: 2px solid white;
+  text-align: center;
 
+  .social-link{
+    padding: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+
+    img{
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .copyright{
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+    p{
+      margin: 4px;
+    }
+  }
+
+  @media (max-height: 400px) {
+    display: none;
+  }
+}
 .loading {
   @keyframes spin {
     to {

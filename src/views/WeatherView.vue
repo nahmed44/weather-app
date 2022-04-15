@@ -97,6 +97,7 @@ export default {
   transition: 500ms ease;
   width: 100%;
   height: 100%;
+  margin-bottom: 75px;
 
   nav {
     display: flex;
