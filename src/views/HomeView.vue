@@ -9,7 +9,7 @@
        <header>
         <nav>
           <div class="nav">
-            <Toggle v-model="$store.state.toggleValue" v-bind="$store.state.toggleValue" on-label="On" off-label="Off" @change="$store.dispatch('storeUserPreference')" class="toggle" :title="darkModeTitle"/>
+            <DarkModeToggle />
             <span @click="showDeleteCity = !showDeleteCity" class="material-icons-outlined" title="Show Delete City">edit</span>
           </div>
         </nav>
@@ -37,6 +37,7 @@
 <script>
 import axios from 'axios';
 import City from '@/components/City.vue'
+import DarkModeToggle from '@/components/DarkModeToggle.vue'
 import Toggle from '@vueform/toggle'
 // @ is an alias to /src
 // https://dribbble.com/shots/15292603-Weather-Conceptual-App-Design#
@@ -45,6 +46,7 @@ export default {
   components: {
     City,
     Toggle,
+    DarkModeToggle,
   },
   data(){
     return {
@@ -164,18 +166,6 @@ export default {
     .nav{
       display: flex;
       margin-top: 5px;
-
-      .toggle{
-        --toggle-bg-on: rgb(13, 40, 54);
-        --toggle-bg-off: #d0cdcd92;
-        --toggle-border-on: rgb(13, 40, 54);
-        --toggle-font-size: 0.85rem;
-        --toggle-duration: 400ms;
-        --toggle-ring-width: 0rem;
-        --toggle-height: 1.35rem;
-        --toggle-width: 3.2rem;
-        --toggle-border: 0;
-      }
     
       span{
         margin-left: 15px;

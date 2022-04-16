@@ -23,15 +23,16 @@
     </div>
 
     <!-- Delete city button -->
-    <span
-      title="Delete city"
-      v-show="showDeleteCity"
-      @click.stop="deleteCity"
-      class="material-icons-round delete"
-      :style="{'background-color': $store.state.bodyBgColor, 'border-color': $store.state.bodyBgColor }"
-      ref="delete"
-      >delete_forever</span
-    >
+    <transition name="delete">
+      <span
+        title="Delete city"
+        v-show="showDeleteCity"
+        @click.stop="deleteCity"
+        class="material-icons-round delete"
+        :style="{'background-color': $store.state.bodyBgColor, 'border-color': $store.state.bodyBgColor }"
+        ref="delete"
+        >delete_forever</span>
+    </transition>
   </div>
 </template>
 
@@ -128,6 +129,19 @@ export default {
     }
   }
 
+  .delete-enter-active {
+    transition: all 0.3s ease-out;
+  }
+
+  .delete-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .delete-enter-from,
+  .delete-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+  }
   .delete {
     border-radius: 0px 15px 0 15px;
     border: 7px solid;
@@ -137,6 +151,11 @@ export default {
     bottom: 0px;
     left: 0px;
     cursor: pointer;
+    transition: all 0.5s ease-in-out;
+
+    &:hover {
+      color: red;
+    }
   }
 
   .weather {

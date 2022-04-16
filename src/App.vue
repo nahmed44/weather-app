@@ -130,4 +130,14 @@ body::-webkit-scrollbar { /* Disable scrollbar Chrome/Safari/Webkit */
   width: 0px;
   background: transparent; 
 }
+
+:root { /**Global variables for dark mode toggle */
+  --toggle-size: 0.7rem;
+  --switch-w: 4em;
+  --switch-h: 2em;
+  --switch-handle-scale: 0.65;
+  --switch-off-handle-x: -0.125em;
+  --switch-on-handle-x: calc(100% - 0.125em);
+  --switch-transition-duration: 0.4s;
+}
 </style>
