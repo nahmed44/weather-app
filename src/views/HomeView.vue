@@ -39,8 +39,7 @@ import axios from 'axios';
 import City from '@/components/City.vue'
 import DarkModeToggle from '@/components/DarkModeToggle.vue'
 import Toggle from '@vueform/toggle'
-// @ is an alias to /src
-// https://dribbble.com/shots/15292603-Weather-Conceptual-App-Design#
+
 export default {
   name: "HomeView",
   components: {
