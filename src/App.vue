@@ -68,7 +68,7 @@ body {
   bottom: 0;
   width: 100%;
   height: 72px;
-  border-top: 2px solid white;
+  // border-top: 2px solid white;
   text-align: center;
 
   .social-link{

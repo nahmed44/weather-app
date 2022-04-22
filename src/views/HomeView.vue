@@ -26,9 +26,11 @@
       </div>
       <!-- List of cities -->
       <div class="grid">
-        <div class="city" v-for="(city, index) in userCities" :key="index">
-          <City :city="city" :showDeleteCity="showDeleteCity" @deleteCity="deleteCity"/>
-        </div>
+        <transition-group name="city">
+          <div class="city" v-for="(city, index) in userCities" :key="index">
+            <City :city="city" :showDeleteCity="showDeleteCity" @deleteCity="deleteCity"/>
+          </div>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -148,6 +150,21 @@ export default {
 </script>
 <style src="@vueform/toggle/themes/default.css"></style>
 <style lang="scss" scoped>
+.city-move,
+.city-enter-active, 
+.city-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.city-enter-from{
+  opacity: 0;
+  transform: translateX(50px);
+}
+.city-leave-to {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
 .home-view {
   margin: 10px 20px;
   display: flex;
@@ -213,6 +230,7 @@ export default {
 }
 .grid{
   display: grid;
+  position: relative;
   padding-top: 30px;
   width: 100%;
   gap: 20px;

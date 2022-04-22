@@ -130,11 +130,11 @@ export default {
   }
 
   .delete-enter-active {
-    transition: all 0.3s ease-out;
+    transition: all 0.1s ease-out;
   }
 
   .delete-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
   }
 
   .delete-enter-from,
@@ -151,7 +151,7 @@ export default {
     bottom: 0px;
     left: 0px;
     cursor: pointer;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
       color: red;
