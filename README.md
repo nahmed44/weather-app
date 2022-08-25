@@ -12,12 +12,13 @@
   
   <!--  Netlify badge  -->
   <a href="https://noman-weather-app.netlify.app/">
-    <img src="https://img.shields.io/netlify/9b0bfe36-c12d-4809-9a57-f4dede25b668" alt="Logo" width="100">
+    <img src="https://api.netlify.com/api/v1/badges/9b0bfe36-c12d-4809-9a57-f4dede25b668/deploy-status" alt="Logo">
   </a>
   <br />
   
   <!--  Demo link  -->
   <a href="https://noman-weather-app.netlify.app/">Live Demo</a>
+ 
 </div>
 
 
